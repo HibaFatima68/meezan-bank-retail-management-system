@@ -1,0 +1,11 @@
+SELECT name, open_mode FROM v$pdbs;  #if returns mounted
+
+
+ALTER PLUGGABLE DATABASE ORCLPDB OPEN;
+SELECT name, open_mode FROM v$pdbs;  #must return open / READ WRITE
+ALTER SESSION SET CONTAINER=ORCLPDB;
+CREATE USER bank_user IDENTIFIED BY bank_pass;
+GRANT CONNECT, RESOURCE, CREATE SESSION TO bank_user;
+SELECT username FROM dba_users WHERE username='BANK_USER';  #should return bank_user
+
+

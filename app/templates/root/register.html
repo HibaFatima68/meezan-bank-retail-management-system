@@ -1,0 +1,69 @@
+{% extends 'root/default.html' %} 
+
+{% block title %}
+	Register and enjoy banking
+{% endblock %} 
+
+{% block nav_cta %}{% endblock %}
+
+{% block content %}
+
+
+<section class="meezan-auth py-5">
+	<div class="inner-banner"></div>
+	<div class="container py-4">
+	  <div class="auth-card row g-0 align-items-stretch">
+		<div class="col-lg-5 auth-highlight d-flex flex-column justify-content-between">
+			<div>
+				<p class="text-uppercase mb-2 fw-semibold">Meezan-inspired onboarding</p>
+				<h2>Open your Meezan Bank account</h2>
+				<p>Experience Pakistan's #1 Islamic banking interface with instant digital onboarding.</p>
+			</div>
+			<ul class="list-unstyled mt-4">
+				<li class="mb-3"><i class="fa fa-check mr-2"></i> Shariah-compliant accounts</li>
+				<li class="mb-3"><i class="fa fa-check mr-2"></i> Free debit card & digital banking</li>
+				<li><i class="fa fa-check mr-2"></i> 24/7 support & instant transfers</li>
+			</ul>
+		</div>
+		<div class="col-lg-7 bg-white">
+			<div class="auth-form h-100 d-flex flex-column justify-content-center">
+				<h3 class="fw-bold mb-2">Create your profile</h3>
+				<p class="text-muted mb-4">Fill in your details to start banking with Meezan Bank.</p>
+				<form method="POST">
+					<div class="row">
+						<div class="col-md-12 mb-3">
+							<label class="form-label">Full Name</label>
+							<input type="text" name="full_name" class="form-control form-control-lg" placeholder="Muhammad Ahmed" required />
+						</div>
+						<div class="col-md-12 mb-3">
+							<label class="form-label">Email address</label>
+							<input type="email" name="email" class="form-control form-control-lg" placeholder="you@example.com" required />
+						</div>
+						<div class="col-md-6 mb-3">
+							<label class="form-label">Phone Number (11 digits)</label>
+							<input type="tel" name="phone_number" class="form-control form-control-lg" pattern="[0-9]{11}" maxlength="11" placeholder="03XXXXXXXXX" required />
+						</div>
+						<div class="col-md-6 mb-3">
+							<label class="form-label">Address</label>
+							<input type="text" name="address" class="form-control form-control-lg" placeholder="House, Street, City" required />
+						</div>
+						<div class="col-md-6 mb-3">
+							<label class="form-label">Password</label>
+							<input type="password" name="password" class="form-control form-control-lg" placeholder="Create a strong password" required />
+						</div>
+						<div class="col-md-6 mb-4">
+							<label class="form-label">Confirm Password</label>
+							<input type="password" name="confirm_password" class="form-control form-control-lg" placeholder="Re-enter password" required />
+						</div>
+					</div>
+					<div class="pt-1 mb-3">
+						<button class="btn btn-primary btn-lg w-100" type="submit">Create account</button>
+					</div>
+					<p class="small text-muted mb-0">Already with us? <a href="{{ url_for('login') }}">Login to Meezan Bank Digital</a></p>
+				</form>
+			</div>
+		</div>
+	  </div>
+	</div>
+  </section>
+{% endblock %}
