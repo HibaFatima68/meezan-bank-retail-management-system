@@ -10,28 +10,34 @@ def login():
         password = request.form['password']
 
         try:
+            # Get the full user dictionary from DB
             user = User.get_by_email(email)
 
-            if user and bcrypt.check_password_hash(user['password'], password):
-                try:
-                    User.ensure_account_and_card(user['id'])
-                    user = User.get_by_id(user['id'])
-                except Exception as e:
-                    print(f"Warning: Could not ensure account/card for user {user['id']}: {str(e)}")
-                
+            if not user:
+                flash("No user found with this email", "danger")
+                return redirect(url_for('login'))
+
+            # Oracle column is PASSWORD_HASH, not 'password'
+            stored_hash = user.get('password_hash')
+
+            if stored_hash is None:
+                flash("Your account password is missing in the database.", "danger")
+                return redirect(url_for('login'))
+
+            # bcrypt password check
+            if bcrypt.check_password_hash(stored_hash, password):
                 session['user_id'] = user['id']
-                flash('Login succesful', 'success')
+                flash("Login successful!", "success")
                 return redirect(url_for('dashboard'))
             else:
-                flash('Invalid email or password', 'danger')
+                flash("Incorrect password!", "danger")
                 return redirect(url_for('login'))
+
         except Exception as e:
-            flash(f'Login error: {str(e)}', 'danger')
+            flash(f"Login error: {str(e)}", "danger")
             return redirect(url_for('login'))
-        
+
     return render_template('root/login.html')
-
-
 @app.route('/logout')
 def logout():
     session.clear()

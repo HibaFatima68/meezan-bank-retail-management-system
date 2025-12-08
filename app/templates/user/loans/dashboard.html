@@ -1,0 +1,103 @@
+{% extends 'user/default.html' %}
+
+{% block title %}
+Loan Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-cash-stack text-success"></i> My Loans</h2>
+        <a href="{{ url_for('apply_loan') }}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Apply for New
+            Loan</a>
+    </div>
+
+    <!-- Active Loans Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Active Loans</h5>
+        </div>
+        <div class="card-body">
+            {% if active_loans %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Loan Type</th>
+                            <th>Principal</th>
+                            <th>Balance Remaining</th>
+                            <th>Start Date</th>
+                            <th>Expected End Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for loan in active_loans %}
+                        <tr>
+                            <td>{{ loan.type_name }}</td>
+                            <td>PKR {{ "{:,.2f}".format(loan.principal_amount) }}</td>
+                            <td class="fw-bold text-danger">PKR {{ "{:,.2f}".format(loan.balance_remaining) }}</td>
+                            <td>{{ loan.start_date }}</td>
+                            <td>{{ loan.expected_end_date }}</td>
+                            <td>
+                                <form action="{{ url_for('repay_loan', loan_id=loan.loan_account_id) }}" method="POST"
+                                    class="d-flex gap-2">
+                                    <input type="number" name="amount" class="form-control form-control-sm"
+                                        placeholder="Amount" required min="1" style="width: 120px;">
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Repay</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">You have no active loans.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Loan Applications Section -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Application History</h5>
+        </div>
+        <div class="card-body">
+            {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Requested Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td>{{ app.application_date}}</td>
+                            <td>{{ app.type_name }}</td>
+                            <td>PKR {{ "{:,.2f}".format(app.requested_amount) }}</td>
+                            <td>
+                                <span
+                                    class="badge {% if app.status == 'Approved' %}bg-success{% elif app.status == 'Rejected' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                                    {{ app.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No loan applications found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

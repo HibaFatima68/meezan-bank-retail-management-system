@@ -1,26 +1,30 @@
-
 {% extends 'user/default.html' %}
 
 {% block content %}
-  <h1>Transaction History</h1>
-  <table class="table">
+<h1>Transaction History</h1>
+
+<table class="table">
     <thead>
-      <tr>
-        <th>Transaction Type</th>
-        <th>Transaction Date</th>
-        <th>Amount</th>
-        <th>Account</th>
-      </tr>
+        <tr>
+            <th>Type</th>
+            <th>Mode</th>
+            <th>Amount</th>
+            <th>Recipient</th>
+            <th>Balance After</th>
+            <th>Date</th>
+        </tr>
     </thead>
     <tbody>
-      {% for item in transactions_with_pkt %}
+        {% for t in transactions %}
         <tr>
-          <td>{{ item.transaction.type }}</td>
-          <td>{{ item.pkt_timestamp.strftime('%Y-%m-%d %H:%M:%S PKT') if item.pkt_timestamp else 'N/A' }}</td>
-          <td>{{ item.transaction.amount }}</td>
-          <td>{{ item.transaction.recipient_card_number }}</td>
+            <td>{{ t.type }}</td>
+            <td>{{ t.mode }}</td>
+            <td>{{ t.amount }}</td>
+            <td>{{ t.recipient_name or '-' }}</td>
+            <td>{{ t.balance_remaining }}</td>
+            <td>{{ t.timestamp }}</td>
         </tr>
-      {% endfor %}
+        {% endfor %}
     </tbody>
-  </table>
+</table>
 {% endblock %}

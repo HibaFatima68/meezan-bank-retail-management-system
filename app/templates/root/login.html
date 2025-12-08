@@ -1,54 +1,113 @@
-{% extends 'root/default.html' %} 
+{% extends 'root/default.html' %}
 
 {% block title %}
-	Sign-In Into Your App
-{% endblock %} 
+Login | Meezan Bank
+{% endblock %}
 
-{% block nav_cta %}{% endblock %}
+{% block nav_cta %}{% endblock %}  {# hide "Start Banking" button #}
 
 {% block content %}
 
+<style>
+    body {
+        background: url("{{ url_for('static', filename='root/assets/images/image.png') }}") center/cover no-repeat fixed;
+        backdrop-filter: blur(3px);
+        font-family: 'Kumbh Sans', sans-serif;
+    }
 
-<section class="meezan-auth py-5">
-	<div class="container py-4">
-		<div class="auth-card row g-0 align-items-stretch">
-			<div class="col-lg-5 auth-highlight d-flex flex-column justify-content-between">
-				<div>
-					<p class="text-uppercase mb-2 fw-semibold">Meezan-inspired banking</p>
-					<h2>Welcome to Meezan Bank Digital</h2>
-					<p>Seamless, secure and Shariah-compliant experience tailored for every Pakistani household.</p>
-				</div>
-				<ul class="list-unstyled mt-4">
-					<li class="mb-3"><i class="fa fa-check mr-2"></i> Instant dashboard access</li>
-					<li class="mb-3"><i class="fa fa-check mr-2"></i> Secure login with encryption</li>
-					<li><i class="fa fa-check mr-2"></i> Inspired by Meezan Bank UX</li>
-				</ul>
-			</div>
-			<div class="col-lg-7 bg-white">
-				<div class="auth-form h-100 d-flex flex-column justify-content-center">
-					<h3 class="fw-bold mb-2">Sign in</h3>
-					<p class="text-muted mb-4">Enter your credentials to continue banking</p>
-					<form action="{{ url_for('login') }}" method="POST">
-						<div class="mb-4">
-						  <label class="form-label" for="email">Email address</label>
-						  <input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="yourname@email.com" required>
-						</div>
-						<div class="mb-3">
-						  <label class="form-label" for="password">Password</label>
-						  <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Enter password" required>
-						</div>
-						<div class="d-flex justify-content-between align-items-center mb-4">
-							<a class="small text-muted" href="#!">Forgot password?</a>
-							<span class="small text-muted">Need an account? <a href="{{ url_for('register_page') }}">Register with Meezan Bank</a></span>
-						</div>
-						<div class="pt-1">
-						  <button class="btn btn-primary btn-lg w-100" type="submit">Login securely</button>
-						</div>
-						<p class="small text-muted text-center mt-4 mb-0">By logging in you accept our <a href="#!">privacy policy</a>.</p>
-					  </form>
-				</div>
-			</div>
-		</div>
-	</div>
-  </section>
+    .login-wrapper {
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 420px;
+        background: rgba(255, 255, 255, 0.96);
+        padding: 35px 40px;
+        border-radius: 18px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(5px);
+    }
+
+    .login-card h2 {
+        font-weight: 700;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .login-card p {
+        text-align: center;
+        color: #8f27ebe1;
+        margin-bottom: 25px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+    }
+
+    .btn-login {
+        background: #8f27ebe1;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 12px;
+    }
+
+    .btn-login:hover {
+        background: #7a15d2a2
+        color: #fff;
+    }
+
+    .extra-links {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 0.9rem;
+    }
+
+    .extra-links a {
+        text-decoration: none;
+        color: #9027ebbe;
+        font-weight: 600;
+    }
+</style>
+
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <h2>Meezan Digital Banking</h2>
+        <p>Secure Login</p>
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="mb-3">
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Email Address"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Password"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100 mt-2">Login Securely</button>
+
+            <div class="extra-links">
+                <a href="#!">Forgot Password?</a>
+                <br>
+                <a href="{{ url_for('register_page') }}">Register with Meezan Bank</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

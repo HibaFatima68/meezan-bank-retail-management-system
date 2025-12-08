@@ -32,9 +32,9 @@ def deposit():
                     Transaction.create(
                          user_id=user_id,
                          recipient_name=user['full_name'],
-                         recipient_card_number=user['card_number'],
+                         recipient_card=user['card_number'],
                          amount=amount,
-                         transaction_type="Credit - Deposit"
+                         txn_type="Deposit"
                     )
                     
                     flash(f'Successfully deposited ₦{amount:.2f} to your account.', 'success')

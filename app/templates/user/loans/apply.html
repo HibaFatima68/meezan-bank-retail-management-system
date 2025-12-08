@@ -1,0 +1,77 @@
+{% extends 'user/default.html' %}
+
+{% block title %}
+Apply for Loan
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Apply for a Loan</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="loanType" class="form-label">Loan Type</label>
+                            <select class="form-select" id="loanType" name="loan_type_id" required
+                                onchange="updateDetails()">
+                                <option value="" selected disabled>Select a loan type...</option>
+                                {% for type in loan_types %}
+                                <option value="{{ type.loan_type_id }}" data-rate="{{ type.profit_rate }}"
+                                    data-max-amount="{{ type.max_amount }}"
+                                    data-max-months="{{ type.max_duration_months }}">
+                                    {{ type.type_name }} ({{ type.profit_rate }}% Profit Rate)
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Requested Amount (PKR)</label>
+                            <input type="number" class="form-control" id="amount" name="amount" required min="1000">
+                            <div class="form-text" id="amountHelp">Select a loan type to see limits.</div>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded" id="loanDetails" style="display: none;">
+                            <h6>Loan Details</h6>
+                            <p class="mb-1"><strong>Profit Rate:</strong> <span id="displayRate">-</span>%</p>
+                            <p class="mb-1"><strong>Max Duration:</strong> <span id="displayDuration">-</span> months
+                            </p>
+                            <p class="mb-0 text-muted small"><em>Subject to approval based on credit score.</em></p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('loan') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success">Submit Application</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateDetails() {
+        const select = document.getElementById('loanType');
+        const selectedOption = select.options[select.selectedIndex];
+        const detailsDiv = document.getElementById('loanDetails');
+
+        if (selectedOption.value) {
+            const rate = selectedOption.getAttribute('data-rate');
+            const maxAmount = selectedOption.getAttribute('data-max-amount');
+            const maxMonths = selectedOption.getAttribute('data-max-months');
+
+            document.getElementById('displayRate').innerText = rate;
+            document.getElementById('displayDuration').innerText = maxMonths;
+            document.getElementById('amountHelp').innerText = `Max Amount: PKR ${parseFloat(maxAmount).toLocaleString()}`;
+            document.getElementById('amount').max = maxAmount;
+
+            detailsDiv.style.display = 'block';
+        }
+    }
+</script>
+{% endblock %}

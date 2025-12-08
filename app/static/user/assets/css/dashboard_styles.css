@@ -3,7 +3,7 @@
 
 section a {
   text-decoration: none;
-  color: #000;
+  color: #e329b4;
 } 
 
 @media (min-width: 768px) {
@@ -62,7 +62,7 @@ p {
   justify-content: space-between;
   text-align: center;
   padding: 0 15px;
-  background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%);
+  background-image: linear-gradient(to right, #d377ae 0%, #46ccca 51%, hwb(276 36% 14%) 100%);
   border: none;
   transition: 0.5s;
   background-size: 200% auto;
@@ -87,7 +87,7 @@ p {
 
 .form-control {
   color: white;
-  background-color: #223C60;
+  background-color: #c824bf;
   border: 2px solid transparent;
   height: 60px;
   padding-left: 20px;
@@ -96,8 +96,8 @@ p {
 
 .form-control:focus {
   color: white;
-  background-color: #0C4160;
-  border: 2px solid #2d4dda;
+  background-color: #d62ad9;
+  border: 2px solid #c02dda;
   box-shadow: none;
 }
 
@@ -130,7 +130,7 @@ p {
 }
 
 .Inner-wrap {
-  background-color: #0c0014;
+  background-color: #9814a4;
 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%230d1838' points='1600%2C160 0%2C460 0%2C350 1600%2C50'/%3E%3Cpolygon fill='%230e315d' points='1600%2C260 0%2C560 0%2C450 1600%2C150'/%3E%3Cpolygon fill='%230f4981' points='1600%2C360 0%2C660 0%2C550 1600%2C250'/%3E%3Cpolygon fill='%231062a6' points='1600%2C460 0%2C760 0%2C650 1600%2C350'/%3E%3Cpolygon fill='%23117aca' points='1600%2C800 0%2C800 0%2C750 1600%2C450'/%3E%3C/g%3E%3C/svg%3E");
   background-size: auto 147%;
   background-position: center;
@@ -157,7 +157,7 @@ p {
   right: 0;
   top: 0;
   padding: inherit;
-  fill: #117aca;
+  fill: #b4198d;
 }
 
 /* Controls chip icon */
@@ -326,7 +326,7 @@ body {
 }
 
 .newslatter-button {
-  background: linear-gradient(125deg, #3498db, #34495e);
+  background: linear-gradient(125deg, #de37e3, #e450d6);
   color: #fff;
   cursor: pointer;
   transition: 0.4s;
@@ -353,7 +353,7 @@ body {
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
-  --bs-purple: #6f42c1;
+  --bs-purple: #c142bf;
   --bs-pink: #d63384;
   --bs-red: #dc3545;
   --bs-orange: #fd7e14;
@@ -2182,11 +2182,11 @@ progress {
 }
 
 .table-success {
-  --bs-table-color: #000;
+  --bs-table-color: #af53b0;
   --bs-table-bg: #d1e7dd;
   --bs-table-border-color: #bcd0c7;
   --bs-table-striped-bg: #c7dbd2;
-  --bs-table-striped-color: #000;
+  --bs-table-striped-color: #c556a9;
   --bs-table-active-bg: #bcd0c7;
   --bs-table-active-color: #000;
   --bs-table-hover-bg: #c1d6cc;

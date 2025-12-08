@@ -1,0 +1,51 @@
+{% extends 'user/default.html' %}
+
+{% block title %}
+Rent a Locker
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center"><i class="bi bi-key text-success"></i> Available Lockers</h2>
+
+    {% if available_lockers %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for locker in available_lockers %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <div class="feature bg-light rounded-circle mb-3 mx-auto">
+                        <i class="bi bi-shield-lock text-success fs-3"></i>
+                    </div>
+                    <h5 class="card-title">Locker #{{ locker.locker_number }}</h5>
+                    <p class="text-muted">{{ locker.locker_size }} Size</p>
+
+                    <div class="d-flex justify-content-between px-3 md-3">
+                        <span><i class="bi bi-geo-alt"></i> {{ locker.location }}</span>
+                        <span><i class="bi bi-shop"></i> {{ locker.branch_name }}</span>
+                    </div>
+
+                    <h3 class="text-success mt-3">PKR {{ "{:,.0f}".format(locker.annual_fee) }}<span
+                            class="fs-6 text-muted">/yr</span></h3>
+
+                    <form method="POST" class="mt-4">
+                        <input type="hidden" name="locker_id" value="{{ locker.locker_id }}">
+                        <button type="submit" class="btn btn-outline-success w-100">Rent Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <h4 class="alert-heading">No Lockers Available</h4>
+        <p>Sorry, all lockers are currently occupied in your branch. Please check back later.</p>
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-5">
+        <a href="{{ url_for('locker') }}" class="btn btn-secondary">Back to My Lockers</a>
+    </div>
+</div>
+{% endblock %}

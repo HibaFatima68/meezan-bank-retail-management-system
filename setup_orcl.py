@@ -5,9 +5,9 @@ def setup_oracle_database():
     try:
         # Connection
         connection = oracledb.connect(
-            user="C##dbproject",
+            user="C##HRTESTER",
             password="123",
-            dsn="DESKTOP-3PG8SO1:1521/orcl"
+            dsn="localhost:1521/orcl"
         )
         
         cursor = connection.cursor()

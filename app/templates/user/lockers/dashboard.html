@@ -1,0 +1,56 @@
+{% extends 'user/default.html' %}
+
+{% block title %}
+Locker Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-box-seam text-success"></i> My Lockers</h2>
+        <a href="{{ url_for('rent_locker') }}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Rent New
+            Locker</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if my_lockers %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Locker Number</th>
+                            <th>Size</th>
+                            <th>Rent Period</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental in my_lockers %}
+                        <tr>
+                            <td class="fw-bold">{{ rental.locker_number }}</td>
+                            <td>{{ rental.locker_size }}</td>
+                            <td>
+                                {{ rental.start_date }} <i class="bi bi-arrow-right mx-1"></i> {{ rental.end_date }}
+                            </td>
+                            <td>
+                                <span
+                                    class="badge {% if rental.status == 'Active' %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ rental.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+                <p class="text-muted">You have not rented any lockers yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

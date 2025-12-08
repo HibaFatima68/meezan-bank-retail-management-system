@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_USER = os.getenv('DB_USER', 'C##dbproject')
+DB_USER = os.getenv('DB_USER', 'C##HRTESTER')
 DB_PASSWORD = os.getenv('DB_PASSWORD', '123')
-DB_DSN = os.getenv('DB_DSN', 'DESKTOP-3PG8SO1:1521/orcl')
+DB_DSN = os.getenv('DB_DSN', 'localhost:1521/orcl')
 
 class Database:
     

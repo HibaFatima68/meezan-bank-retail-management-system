@@ -17,149 +17,20 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="../../static/root/assets/css/style-starter.css">
     <style>
-      :root {
-        --meezan-green: #00a651;
-        --meezan-green-dark: #007d3a;
-        --meezan-green-light: #e6f5ec;
-        --meezan-plum: #5a2a83;
-        --text-dark: #0f1f1c;
-      }
+     <style>
+:root {
+    --purple-light: #e6d6ff;
+    --purple-mid: #ba8fff;
+    --purple-main: #7e4ac6ff;
+    --purple-dark: #bc2abcff;
+    --purple-deep: #932ca3ff;
 
-      body {
-        font-family: 'Kumbh Sans', 'Segoe UI', sans-serif;
-        background-color: #f8fbf8;
-        color: var(--text-dark);
-      }
+    --text-dark: #121212;
+    --bg-light: #faf7ff;
 
-      #site-header {
-        background: transparent;
-      }
-
-      #site-header .navbar {
-        background: #fff;
-        border-radius: 18px;
-        padding: 0.75rem 1.5rem;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
-        border: 1px solid rgba(0, 166, 81, 0.1);
-      }
-
-      .navbar-brand span {
-        color: var(--meezan-green);
-      }
-
-      .navbar-brand {
-        font-weight: 700;
-        color: var(--text-dark);
-        letter-spacing: 0.5px;
-      }
-
-      .navbar .nav-link {
-        color: #2c2c2c;
-        font-weight: 600;
-        transition: color 0.2s ease;
-      }
-
-      .navbar .nav-link:hover,
-      .navbar .nav-link:focus,
-      .navbar .nav-link.active {
-        color: var(--meezan-green) !important;
-      }
-
-      .btn-primary,
-      .btn-style.btn-primary {
-        background: linear-gradient(135deg, var(--meezan-green), var(--meezan-green-dark));
-        border: none;
-        color: #fff;
-        box-shadow: 0 10px 20px rgba(0, 166, 81, 0.25);
-      }
-
-      .btn-outline-light,
-      .btn-style.btn-outline-light {
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        color: #fff;
-      }
-
-      .btn-outline-light:hover {
-        background: rgba(255, 255, 255, 0.15);
-        color: #fff;
-      }
-
-      .inner-banner {
-        background: linear-gradient(135deg, var(--meezan-green), var(--meezan-plum));
-        min-height: 120px;
-        border-radius: 18px;
-      }
-
-      .home-services .box-wrap {
-        border: none;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
-      }
-
-      .home-services .icon span {
-        color: var(--meezan-green);
-        font-size: 2.5rem;
-      }
-
-      .w3l-main-slider .slider-info {
-        background: linear-gradient(120deg, rgba(0, 166, 81, 0.9), rgba(90, 42, 131, 0.8));
-      }
-
-      .meezan-auth {
-        background: linear-gradient(135deg, rgba(0, 166, 81, 0.08), rgba(90, 42, 131, 0.08));
-      }
-
-      .auth-card {
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(0, 166, 81, 0.15);
-        background: #fff;
-      }
-
-      .auth-highlight {
-        background: linear-gradient(180deg, rgba(0, 166, 81, 0.9), rgba(90, 42, 131, 0.9));
-        color: #fff;
-        padding: 3rem;
-      }
-
-      .auth-highlight h2 {
-        font-weight: 700;
-        margin-bottom: 1rem;
-      }
-
-      .auth-highlight p {
-        font-size: 1.05rem;
-        opacity: 0.9;
-      }
-
-      .auth-form {
-        padding: 3rem;
-      }
-
-      .auth-form .form-control {
-        border-radius: 12px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        padding: 0.9rem 1rem;
-      }
-
-      .auth-form .form-control:focus {
-        border-color: var(--meezan-green);
-        box-shadow: 0 0 0 0.2rem rgba(0, 166, 81, 0.15);
-      }
-
-      .auth-form label {
-        font-weight: 600;
-        color: #4a4a4a;
-      }
-
-      .auth-form .btn {
-        border-radius: 12px;
-        padding: 0.85rem;
-        font-weight: 600;
-      }
-    </style>
+    --gradient-primary: linear-gradient(135deg, var(--purple-mid), var(--purple-main));
+}
+ </style>
   </head>
   <body>
 
@@ -195,6 +66,7 @@
               <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
               <span class="navbar-toggler-icon fa icon-close fa-times"></span>
           </button>
+
 
           <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul class="navbar-nav ml-auto">
@@ -271,7 +143,7 @@
               <a class="navbar-brand" href="index.html">
                 <span class="fa fa-cc-visa"></span> Bank Card</a>
             </div>
-            <p>It is the leading financial establishment providing high-quality international banking services. Our
+            <p>It is the leading financial establishment providing shariah compliant banking services. Our
               success
               is attributed to our loyal customers. We provide reliable services for you.</p>
           </div>
@@ -288,7 +160,7 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-7 col-7 footer-list-29 footer-3 mt-lg-0 mt-5">
             <h6 class="footer-title-29">Head Office</h6>
-            <p class="mb-3"> Bank Card, 343 banking lane, #2214 cravel street, NY.</p>
+            <p class="mb-3"> Bank Card, Meezan House, rgba(218, 218, 90, 0.23),  C-25 Estate Avenue, SITE, Karachi.</p>
             <p class="mb-2"> <span class="fa fa-phone"></span> <a href="tel:+1(21) 234 4567">+1(21) 234 4567</a></p>
             <p class="mb-2"><span class="fa fa-envelope-o"></span> <a href="mailto:info@mail.com">info@mail.com</a></p>
             <p><span class="fa fa-support"></span> <a href="mailto:info@support.com">info@support.com</a></p>
@@ -296,13 +168,15 @@
           <div class="col-lg-3 col-md-6 footer-list-29 footer-4 mt-lg-0 mt-5">
             <h6 class="footer-title-29">Latest posts</h6>
             <div class="post1">
-              <a href="#url" class="post-title">7 Banking Services That Can Save Retirees Money</a>
-              <p class="small">September 28, 2020</p>
-            </div>
-            <div class="post1 mt-4">
-              <a href="#url" class="post-title">Stocks Could Surge 10% between Now And 2020</a>
-              <p class="small">September 28, 2020</p>
-            </div>
+  <a href="#url" class="post-title">Meezan Bank Introduces New Digital Banking Features for 2026</a>
+  <p class="small">September 28, 2026</p>
+</div>
+
+<div class="post1 mt-4">
+  <a href="#url" class="post-title">Islamic Banking Growth Accelerates with Meezan’s New Initiatives</a>
+  <p class="small">September 28, 2026</p>
+</div>
+
           </div>
         </div>
       </div>
@@ -310,7 +184,7 @@
     <!-- copyright -->
     <section class="w3l-copyright text-center">
       <div class="container">
-        <p class="copy-footer-29">© 2020 Bank Cards. All rights reserved.</p>
+        <p class="copy-footer-29">© 2025 Bank Cards. All rights reserved.</p>
       </div>
   
       <!-- move top -->

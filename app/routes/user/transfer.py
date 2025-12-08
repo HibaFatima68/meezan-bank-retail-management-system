@@ -7,112 +7,92 @@ import re
 
 @app.route('/transfer', methods=['GET', 'POST'])
 def transfer():
-     user_id = session.get('user_id')
-     if user_id:
-          user = User.get_by_id(user_id)
-          if not user:
-              flash('User not found', 'danger')
-              return redirect(url_for('login'))
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('You must be logged in.', 'danger')
+        return redirect(url_for('login'))
 
+    user = User.get_by_id(user_id)
+    if not user:
+        flash('User not found.', 'danger')
+        return redirect(url_for('login'))
 
-          if request.method == 'POST':
-               try:
-                    recipient_card_name = request.form['card_name'].strip()
-                    recipient_card_number = request.form['card_number']
-                    amount = float(request.form['amount'])
+    # GET request
+    if request.method == 'GET':
+        return render_template('user/transfer.html', user=user)
 
-                    cleaned_card_number = re.sub(r'\D', '', recipient_card_number)
-                    
-                    if len(cleaned_card_number) != 16:
-                         flash('Card number must be exactly 16 digits.', 'danger')
-                         return redirect(url_for('transfer'))
+    # POST (transfer)
+    try:
+        recipient_name = request.form['card_name'].strip()
+        recipient_card = request.form['card_number']
+        amount = float(request.form['amount'])
 
-                    cleaned_user_card_number = re.sub(r'\D', '', str(user['card_number']))
-                    
-                    if cleaned_card_number == cleaned_user_card_number:
-                         flash('Cannot send funds to yourself. Please enter a different recipient card number.', 'danger')
-                         return redirect(url_for('transfer'))
+        # Clean card
+        clean_card = re.sub(r'\D', '', recipient_card)
 
-                    if amount <= 0:
-                         flash('Amount must be greater than zero', 'danger')
-                         return redirect(url_for('transfer'))
+        if len(clean_card) != 16:
+            flash('Card number must be exactly 16 digits.', 'danger')
+            return redirect(url_for('transfer'))
 
-                    if amount > user['balance']:
-                         flash('Insufficient Funds', 'danger')
-                         return redirect(url_for('transfer'))
-                    
-                    # Query recipient using cleaned card number
-                    recipient = User.get_by_card_number(cleaned_card_number)
+        # Prevent self-transfer
+        user_card_clean = re.sub(r'\D', '', str(user['card_number']))
+        if clean_card == user_card_clean:
+            flash('You cannot transfer to your own card.', 'danger')
+            return redirect(url_for('transfer'))
 
-                    if not recipient:
-                         flash('Invalid recipient card number. Please verify the card number and try again.', 'danger')
-                         return redirect(url_for('transfer'))
+        if amount <= 0:
+            flash("Amount must be greater than zero.", "danger")
+            return redirect(url_for('transfer'))
 
-                    # Check if recipient name matches
-                    if recipient['full_name'].upper() != recipient_card_name.upper():
-                         flash('Recipient card name does not match the card number.', 'danger')
-                         return redirect(url_for('transfer'))
+        if amount > user['balance']:
+            flash("Insufficient balance.", "danger")
+            return redirect(url_for('transfer'))
 
-                    # Check if the recipient is not the same as the sender
-                    if recipient['id'] == user_id:
-                         flash('Cannot send funds to yourself.', 'danger')
-                         return redirect(url_for('transfer'))
-                    
-                    # Update sender's balance
-                    User.subtract_from_balance(user_id, amount)
+        # Validate recipient exists (DB handles name check)
+        recipient = User.get_by_card_number(clean_card)
+        if not recipient:
+            flash("Recipient card not found.", "danger")
+            return redirect(url_for('transfer'))
 
-                    # Update recipient's balance
-                    User.add_to_balance(recipient['id'], amount)
+        # Update balances
+        User.subtract_from_balance(user_id, amount)
+        User.add_to_balance(recipient['id'], amount)
 
-                    # Create transaction records
-                    Transaction.create(
-                         user_id=user_id,
-                         recipient_name=recipient['full_name'],
-                         recipient_card_number=recipient['card_number'],
-                         amount=amount,
-                         transaction_type='Debit'
-                    )
+        # Create sender transaction (DEBIT)
+        Transaction.create(
+            user_id,
+            recipient_name,
+            clean_card,
+            amount,
+            "Transfer"
+        )
 
-                    Transaction.create(
-                         user_id=recipient['id'],
-                         recipient_name=user['full_name'],
-                         recipient_card_number=user['card_number'],
-                         amount=amount,
-                         transaction_type='Credit'
-                    )
+        # Create recipient transaction (CREDIT)
+        Transaction.create(
+            recipient['id'],
+            user['full_name'],
+            user_card_clean,
+            amount,
+            "Deposit"
+        )
 
-                    # Generate receipt (optional - won't fail if PDF generation unavailable)
-                    try:
-                         reciept_data = {
-                              'sender_name': user['full_name'],
-                              'recipient_name': recipient['full_name'],
-                              'recipient_card_number': recipient['card_number'],
-                              'amount': amount
-                         }
+        # Generate receipt
+        try:
+            data = {
+                'sender_name': user['full_name'],
+                'recipient_name': recipient['full_name'],
+                'recipient_card_number': recipient['card_number'],
+                'amount': amount
+            }
+            filename = generate_receipt(data)
+            if filename:
+                return redirect(url_for('payment', filename=filename))
+        except:
+            pass
 
-                         receipt_filename = generate_receipt(reciept_data)
-                         
-                         if receipt_filename:
-                              return redirect(url_for('payment', filename=receipt_filename))
-                         else:
-                              flash(f'Successfully transferred ₦{amount:.2f} to {recipient["full_name"]}.', 'success')
-                              return redirect(url_for('dashboard'))
-                    except Exception as e:
-                         flash(f'Successfully transferred ₦{amount:.2f} to {recipient["full_name"]}.', 'success')
-                         return redirect(url_for('dashboard'))
-               
-               except ValueError:
-                    flash('Invalid amount entered', 'danger')
-                    return redirect(url_for('transfer'))
-               except Exception as e:
-                    flash(f'Transfer failed: {str(e)}', 'danger')
-                    return redirect(url_for('transfer'))
+        flash(f"Successfully transferred PKR {amount:.2f} to {recipient['full_name']}.", "success")
+        return redirect(url_for('dashboard'))
 
-
-
-          return render_template('user/transfer.html', user=user)
-     else:
-          flash('You need to be log in first', 'danger')
-          return redirect(url_for('login'))
-
-
+    except Exception as e:
+        flash(f"Transfer failed: {str(e)}", "danger")
+        return redirect(url_for('transfer'))
