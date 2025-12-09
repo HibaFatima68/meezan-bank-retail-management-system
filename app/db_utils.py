@@ -699,13 +699,13 @@ class LockerDAO:
 
     @staticmethod
     def get_my_lockers(user_id):
-        """Get user's lockers"""
+        """Get user's lockers (only ACTIVE + no duplicates)"""
         try:
             query = """
                 SELECT 
                     lr.RENTAL_ID AS rental_id,
-                    lr.START_DATE AS start_date,
-                    lr.END_DATE AS end_date,
+                    TO_CHAR(lr.START_DATE, 'YYYY-MM-DD HH24:MI:SS') AS start_date,
+                    TO_CHAR(lr.END_DATE, 'YYYY-MM-DD HH24:MI:SS') AS end_date,
                     lr.STATUS AS rental_status,
                     l.LOCKER_NUMBER AS locker_number,
                     l.LOCKER_SIZE AS locker_size,
@@ -714,10 +714,13 @@ class LockerDAO:
                 FROM LOCKER_RENTAL lr
                 JOIN ACCOUNT a ON lr.ACCOUNT_ID = a.ACCOUNT_ID
                 JOIN ACCOUNT_HOLDER ah ON ah.ACCOUNT_ID = a.ACCOUNT_ID
+                                   AND ah.HOLDER_TYPE = 'Primary'
                 JOIN USER_AUTH ua ON ua.CUSTOMER_ID = ah.CUSTOMER_ID
                 JOIN LOCKER l ON l.LOCKER_ID = lr.LOCKER_ID
                 JOIN BRANCH b ON b.BRANCH_ID = l.BRANCH_ID
                 WHERE ua.USER_ID = :user_id_param
+                AND lr.STATUS = 'Active'
+                AND lr.END_DATE >= SYSDATE
                 ORDER BY lr.START_DATE DESC
             """
             results = db.execute_query(query, {"user_id_param": user_id}, fetch_all=True)
