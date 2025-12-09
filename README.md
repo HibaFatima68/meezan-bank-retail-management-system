@@ -101,8 +101,19 @@ Displays:
  ├── db_utils.py     # DAO layer + Oracle procedure calls
 run.py                # App entry points
 ```
+## Entity–Relationship Diagram (ERD)
 
----
+Below is the ERD representing all core entities of the Retail Banking System such as Customer, Account, Card, Transaction, Loan, Locker, and their relationships:
+
+<img width="1273" height="638" alt="image" src="https://github.com/user-attachments/assets/eadfc80d-c011-41f8-a132-c704e88db83f" />
+
+## Relational Schema (3NF)
+
+The database has been fully normalized up to Third Normal Form (3NF).
+
+<img width="12111" height="6058" alt="proj diagram-2025-12-09-221114" src="https://github.com/user-attachments/assets/8df11cc9-7f11-4e6a-a33e-39ba29197171" />
+
+
 ## Setup Instructions
 
 ### 1️) Create Virtual Environment
